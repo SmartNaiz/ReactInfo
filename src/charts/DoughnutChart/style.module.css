@@ -1,0 +1,35 @@
+.chartContainer {
+  margin: 0 auto;
+  max-width: 100%;
+  position: relative;
+  width: 360px;
+}
+.chartInner {
+  /* background: rgba(255, 128, 0, 0.1); */
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  position: absolute;
+  top: 35%;
+  right: 20%;
+  bottom: 20%;
+  left: 20%;
+  border-radius: 50%;
+  padding: 1.25em 0;
+  line-height: 120%;
+  z-index: 10; /* Allow tooltips on top */
+  overflow: hidden;
+}
+.chartStatus,
+.chartValue {
+  font-weight: bold;
+}
+.chartTarget,
+.chartDaysLabel {
+  font-size: 1.95em;
+}
+.chartDaysRemaining {
+  color: #f90;
+  font-weight: bold;
+  margin-top: 0.25em;
+}

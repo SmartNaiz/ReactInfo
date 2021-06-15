@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
+
+/* .out {
+  padding: 5px;
+} */
+.container {
+  /* background-color: rgba(128, 128, 128, 0.473); */
+  /* color: white; */
+  font-family: "Muli", "sans-serif";
+  /* display: flex; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  /* overflow: hidden; */
+  padding: 20px 40px;
+  border-radius: 10px;
+  width: 300px;
+  margin: auto;
+}
+
+.container h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.container a {
+  text-decoration: none;
+  color: lightblue;
+}
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  background: lightblue;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 16px;
+  border: 0;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.formControl {
+  position: relative;
+  margin: 10px 0 10px;
+  width: 200px;
+}
+
+.formControl input {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px #fff solid;
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.formControl input:focus,
+.formControl input:valid {
+  outline: 0;
+}
+
+.logo {
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 25vh;
+  /* border-radius: 60px; */
+  color: brown;
+  cursor: pointer;
+  flex: 0.1;
+  /* margin: 2px; */
+  /* position: relative; */
+  /* border: 4px dotted blue; */
+  /* border: 1px solid rgb(207, 207, 204); */
+}
+.panel {
+  background-size: auto 100%;
+  background-position: right;
+  background-repeat: no-repeat;
+  height: 40vh;
+  max-width: 100%;
+  /* flex: 0.15; */
+  /* margin: 5px; */
+  position: relative;
+}

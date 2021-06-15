@@ -1,0 +1,7 @@
+.border {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(6, 174, 240);
+  background-color: rgba(211, 211, 211, 0.192);
+  border-radius: 5px;
+}
