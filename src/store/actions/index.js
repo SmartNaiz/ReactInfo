@@ -10,6 +10,8 @@ import {
   GET_WATER_FLOW,
   GET_WATER_SAN,
   GET_WORKED_TIME,
+  GET_WATER_ALARM,
+  GET_PUMP_CTST,
 } from "../types";
 
 import * as api from "../../api";
@@ -88,20 +90,32 @@ export const editReview = (data, id) => ({
 
 //======= flowData
 
-export const getWaterFlow = (startDate, endDate) => ({
+export const getWaterFlow = (startDate, endDate, userId) => ({
   type: GET_WATER_FLOW,
-  payload: api.getWaterFlow(startDate, endDate),
+  payload: api.getWaterFlow(startDate, endDate, userId),
 });
 
 //======= flowSan
 
-export const getWaterSan = (startDate, endDate) => ({
+export const getWaterSan = (startDate, endDate, userId) => ({
   type: GET_WATER_SAN,
-  payload: api.getWaterSan(startDate, endDate),
+  payload: api.getWaterSan(startDate, endDate, userId),
 });
 
 //======= WorkedTime
-export const getWorkedTime = (startDate, endDate) => ({
+export const getWorkedTime = (startDate, endDate, userId) => ({
   type: GET_WORKED_TIME,
-  payload: api.getWorkedTime(startDate, endDate),
+  payload: api.getWorkedTime(startDate, endDate, userId),
+});
+
+//======= WaterAlarm
+export const getWaterAlarm = (startDate, endDate, userId) => ({
+  type: GET_WATER_ALARM,
+  payload: api.getWaterAlarm(startDate, endDate, userId),
+});
+
+//======= PumpCtSt
+export const getPumpCtSt = (startDate, endDate, userId) => ({
+  type: GET_PUMP_CTST,
+  payload: api.getPumpCtSt(startDate, endDate, userId),
 });

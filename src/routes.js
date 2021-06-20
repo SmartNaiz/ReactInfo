@@ -7,7 +7,7 @@ import AuthHoc from "./components/hoc/authHoc";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Contact from "./components/contact";
-import Dashboard from "./components/dashboard";
+import DashPage from "./Pages/DashPage";
 import Messages from "./components/messages";
 import HomePage from "./Pages/HomePage";
 
@@ -25,7 +25,7 @@ class Routes extends Component {
 
         <Switch>
           <Route path="/contact/messages" component={AuthHoc(Messages)} />
-          <Route path="/dashboard" component={AuthHoc(Dashboard)} />
+          <Route path="/dashboard" component={AuthHoc(DashPage)} />
           <Route path="/contact" component={AuthHoc(Contact)} />
           <Route path="/" component={HomePage} />
         </Switch>
@@ -37,7 +37,7 @@ class Routes extends Component {
 
   render() {
     const { auth } = this.props;
-    return auth.checkingAuth ? this.app(auth) : "...loading";
+    return auth.checkingAuth ? this.app(auth) : "...loading..";
   }
 }
 

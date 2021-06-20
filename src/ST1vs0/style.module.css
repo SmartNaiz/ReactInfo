@@ -1,0 +1,6 @@
+.note {
+  width: 430px;
+  height: 225px;
+  background-color: lightblue;
+  overflow: auto;
+}

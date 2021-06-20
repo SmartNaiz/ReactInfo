@@ -41,7 +41,7 @@ const LineChart = ({ label, chartData, deviceId }) => {
 
   return (
     <>
-      <Line data={data} options={options} />
+      <Line data={data} options={options} width={600} height={200}></Line>
     </>
   );
 };

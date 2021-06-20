@@ -4,14 +4,15 @@ import Doughnut from "../charts/DoughnutChart";
 import { motorDough } from "../utils/needFunctions";
 import WaterCard from "../components/waterCard";
 import ElectricCard from "../components/electricCard";
-const GxCard = ({ title, motorTime }) => {
+import css from "./style.module.css";
+const ST1vs0 = ({ title, motorTime }) => {
   let nss1 = [0, 1440];
   if (motorTime > 0) {
     nss1 = motorDough(motorTime);
   }
   return (
     <>
-      <h6>{title}</h6>
+      <h5>{title}</h5>
       <br />
       <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
         <Tab eventKey="home" title="Home">
@@ -32,11 +33,13 @@ const GxCard = ({ title, motorTime }) => {
             </div>
           </div>
         </Tab>
-        <Tab eventKey="WorkedTime" title="WorkedTime"></Tab>
+        <Tab eventKey="WorkedTime" title="WorkedTime">
+          <div className={css.note}>"12:34:56 started"</div>
+        </Tab>
         <Tab eventKey="Alarms" title="Alarms"></Tab>
       </Tabs>
     </>
   );
 };
 
-export default GxCard;
+export default ST1vs0;

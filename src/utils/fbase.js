@@ -24,3 +24,4 @@ export const flowMeterCollection = DB.collection("FlowMeter");
 export const alarmCollection = DB.collection("Alarms");
 export const sanCollection = DB.collection("SanMeter");
 export const WorkedTimeCollection = DB.collection("WorkedTime");
+export const PumpCtStCollection = DB.collection("PumpCtSt");

@@ -9,6 +9,8 @@ import {
   flowMeterCollection,
   sanCollection,
   WorkedTimeCollection,
+  alarmCollection,
+  PumpCtStCollection,
 } from "../utils/fbase";
 import { transpose } from "../utils/needFunctions";
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
@@ -205,9 +207,9 @@ export const sendContact = (data) => {
 
 // =============Report Data================================
 
-export const getWaterFlow = (startDate, endDate) => {
+export const getWaterFlow = (startDate, endDate, userId) => {
   return flowMeterCollection
-    .where("UserId", "==", "TSMIN")
+    .where("UserId", "==", userId)
     .where("created", ">=", startDate)
     .where("created", "<=", endDate)
     .orderBy("created")
@@ -215,114 +217,22 @@ export const getWaterFlow = (startDate, endDate) => {
     .then((snapshot) => {
       const { docs } = snapshot;
       const flowList = docs.map((doc, i) => {
-        const { GX1FMT, GX2FMT, APWFMT, PWFMT, ERFMT, created } = doc.data();
-        return [
-          GX1FMT,
-          GX2FMT,
-          APWFMT,
-          PWFMT,
-          ERFMT,
-          moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
-        ];
+        const { created, FlowMeter } = doc.data();
+        return {
+          created: moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
+          FlowMeter,
+        };
       });
-
-      const startedDate = flowList[0][5];
-      const endedDate = flowList[1][5];
-      const idNum = "№";
-      const location = "Байршил";
-      const measuredValue = "Усны зарцуулалт";
-
-      const excelData = [
-        {
-          [idNum]: 1,
-          [location]: "Гүний худаг 1",
-          [endedDate]: flowList[1][0],
-          [startedDate]: flowList[0][0],
-          [measuredValue]: flowList[1][0] - flowList[0][0],
-        },
-        {
-          [idNum]: 2,
-          [location]: "Гүний худаг 2",
-          [endedDate]: flowList[1][1],
-          [startedDate]: flowList[0][1],
-          [measuredValue]: flowList[1][1] - flowList[0][1],
-        },
-        {
-          [idNum]: 3,
-          [location]: "Ахуйн цэвэр ус",
-          [endedDate]: flowList[1][2],
-          [startedDate]: flowList[0][2],
-          [measuredValue]: flowList[1][2] - flowList[0][2],
-        },
-        {
-          [idNum]: 4,
-          [location]: "Цэвэр ус",
-          [endedDate]: flowList[1][3],
-          [startedDate]: flowList[0][3],
-          [measuredValue]: flowList[1][3] - flowList[0][3],
-        },
-        {
-          [idNum]: 5,
-          [location]: "Эргэлтийн ус",
-          [endedDate]: flowList[1][4],
-          [startedDate]: flowList[0][4],
-          [measuredValue]: flowList[1][4] - flowList[0][4],
-        },
-      ];
-      const tableData = [
-        [
-          1,
-          "Гүний худаг 1",
-          flowList[1][0],
-          flowList[0][0],
-          flowList[1][0] - flowList[0][0],
-        ],
-        [
-          2,
-          "Гүний худаг 2",
-          flowList[1][1],
-          flowList[0][1],
-          flowList[1][1] - flowList[0][1],
-        ],
-        [
-          3,
-          "Ахуйн цэвэр ус",
-          flowList[1][2],
-          flowList[0][2],
-          flowList[1][2] - flowList[0][2],
-        ],
-        [
-          4,
-          "Цэвэр ус",
-          flowList[1][3],
-          flowList[0][3],
-          flowList[1][3] - flowList[0][3],
-        ],
-        [
-          5,
-          "Эргэлтийн ус",
-          flowList[1][4],
-          flowList[0][4],
-          flowList[1][4] - flowList[0][4],
-        ],
-      ];
-      const charData = [
-        flowList[1][0] - flowList[0][0],
-        flowList[1][1] - flowList[0][1],
-        flowList[1][2] - flowList[0][2],
-        flowList[1][3] - flowList[0][3],
-        flowList[1][4] - flowList[0][4],
-      ];
-      return { startedDate, endedDate, tableData, excelData, charData };
+      return flowList;
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-export const getWaterSan = (startDate, endDate) => {
+export const getWaterSan = (startDate, endDate, userId) => {
   return sanCollection
-    .where("UserId", "==", "TSMIN")
+    .where("UserId", "==", userId)
     .where("created", ">=", startDate)
     .where("created", "<=", endDate)
     .orderBy("created")
@@ -330,39 +240,23 @@ export const getWaterSan = (startDate, endDate) => {
     .then((snapshot) => {
       const { docs } = snapshot;
       const sanList = docs.map((doc, i) => {
-        const {
-          UserId,
-          created,
-          APWsan,
-          ASHsan,
-          ERsan1,
-          ERsan2,
-          URsan,
-          PWsan,
-        } = doc.data();
-        return [
-          i + 1,
-          moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
-          UserId,
-          ASHsan,
-          URsan,
-          APWsan,
-          PWsan,
-          ERsan1,
-          ERsan2,
-        ];
+        const { created, San } = doc.data();
+        return {
+          created: moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
+          San,
+        };
       });
-      transpose(sanList);
-      const chartData = sanList.slice(0, 9);
-      return { startDate, endDate, chartData };
+      // transpose(sanList);
+      // const chartData = sanList.slice(0, 9);
+      return sanList;
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-export const getWorkedTime = (startDate, endDate) => {
-  return WorkedTimeCollection.where("UserId", "==", "TSMIN")
+export const getWorkedTime = (startDate, endDate, userId) => {
+  return WorkedTimeCollection.where("UserId", "==", userId)
     .where("created", "==", startDate)
     .where("created", "<=", endDate)
     .orderBy("created")
@@ -370,37 +264,63 @@ export const getWorkedTime = (startDate, endDate) => {
     .then((snapshot) => {
       const { docs } = snapshot;
       const dataList = docs.map((doc, i) => {
-        const {
-          UserId,
-          created,
-          APWvlvTime,
-          ASHnss1Time,
-          ASHnss2Time,
-          ERnss1Time,
-          ERnss2Time,
-          GX1PmpTime,
-          GX2PmpTime,
-          PWnss1Time,
-          URnss1Time,
-          URnss2Time,
-        } = doc.data();
+        const { UserId, created, WorkedTime } = doc.data();
         return {
           id: i + 1,
           created: moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
-          APWvlv: APWvlvTime.APWvlvH * APWvlvTime.APWvlvM,
-          ASHnss1: ASHnss1Time.ASHnss1H * ASHnss1Time.ASHnss1M,
-          ASHnss2: ASHnss2Time.ASHnss2H * ASHnss2Time.ASHnss2M,
-          ERnss1: ERnss1Time.ERnss1H * ERnss1Time.ERnss1M,
-          ERnss2: ERnss2Time.ERnss2H * ERnss2Time.ERnss2M,
-          GX1Pmp: GX1PmpTime.GX1PmpH * GX1PmpTime.GX1PmpM,
-          GX2Pmp: GX2PmpTime.GX2PmpH * GX2PmpTime.GX2PmpM,
-          PWnss1: PWnss1Time.PWnss1H * PWnss1Time.PWnss1M,
-          URnss1: URnss1Time.URnss1H * URnss1Time.URnss1M,
-          URnss2: URnss2Time.URnss2H * URnss2Time.URnss2M,
+          WorkedTime,
         };
       });
-      console.log("datalist", dataList);
       return dataList;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getWaterAlarm = (startDate, endDate, userId) => {
+  return alarmCollection
+    .where("UserId", "==", userId)
+    .where("created", ">=", startDate)
+    .where("created", "<=", endDate)
+    .orderBy("created")
+    .get()
+    .then((snapshot) => {
+      const { docs } = snapshot;
+      const AlarmList = docs.map((doc, i) => {
+        const { created, idEQ, idAL } = doc.data();
+        return {
+          id: i + 1,
+          created: moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
+          idEQ,
+          idAL,
+        };
+      });
+      return AlarmList;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getPumpCtSt = (startDate, endDate, userId) => {
+  return PumpCtStCollection.where("UserId", "==", userId)
+    .where("created", ">=", startDate)
+    .where("created", "<=", endDate)
+    .orderBy("created")
+    .get()
+    .then((snapshot) => {
+      const { docs } = snapshot;
+      const CtStList = docs.map((doc, i) => {
+        const { created, idEQ, CtSt } = doc.data();
+        return {
+          id: i + 1,
+          created: moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
+          idEQ,
+          CtSt,
+        };
+      });
+      return CtStList;
     })
     .catch((error) => {
       console.log(error);

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Table } from "react-bootstrap";
 import VerticalBar from "../../utils/VerticalBar";
 import HorizontalBar from "../../utils/HorizontalBar";
-import { ExportCSV } from "../../utils/ExportCSV";
+
 import LineDemo from "../../utils/LineDemo";
 import BarChart from "../../utils/BarChart";
 
@@ -20,7 +20,7 @@ const UsTooluur = ({
         <div className="row">
           <div className="col-sm-6">
             <h1> Усны тоолуурын мэдээ</h1>
-            <ExportCSV csvData={excelData} fileName={endedDate} />
+
             <Table striped bordered hover size="sm">
               <thead className="thead-dark">
                 <tr>

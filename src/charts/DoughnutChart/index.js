@@ -31,7 +31,7 @@ const DoughnutChart = ({ dayTime, deviceId }) => {
     <>
       <h7>ID:{deviceId}</h7>
       <div className={css.chartContainer}>
-        <Doughnut data={data} options={options} height={110} width={110} />
+        <Doughnut data={data} options={options} height={100} width={100} />
         <div className={css.chartInner}>
           {/* <div className={css.chartStatus}>Achieved</div> */}
           <div className={css.chartValue}>{Clock} цаг</div>

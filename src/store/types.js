@@ -12,3 +12,6 @@ export const SEND_CONTACT = "send_contact";
 export const GET_WATER_FLOW = "get_water_flow";
 export const GET_WATER_SAN = "get_water_san";
 export const GET_WORKED_TIME = "get_worked_time";
+
+export const GET_WATER_ALARM = "get_water_alarm";
+export const GET_PUMP_CTST = "get_pump_ctst";
