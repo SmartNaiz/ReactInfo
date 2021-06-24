@@ -1,6 +1,6 @@
 .note {
-  width: 430px;
+  /* width: 430px;*/
   height: 225px;
-  background-color: lightblue;
+  /* background-color: lightblue; */
   overflow: auto;
 }

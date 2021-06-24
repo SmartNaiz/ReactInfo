@@ -22,6 +22,8 @@ const TimeSelector = ({ userId }) => {
     date.setHours(8, 0, 0, 0);
     setStartDate(date);
   };
+  console.log("startdate=====", startDate);
+  console.log("endDate=====", endDate);
 
   useEffect(() => {
     dispatch(getWaterFlow(startDate, endDate, userId));

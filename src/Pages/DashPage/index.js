@@ -12,31 +12,42 @@ const DashPage = (props) => {
     { id: 1, name: "tech" },
     { id: 2, name: "nekk" },
   ];
-  let FlowMeter = [];
-  if (props.waterFlow[0] !== undefined) {
-    FlowMeter = props.waterFlow[0].FlowMeter;
+  let waterFlow = [];
+  if (props.waterFlow !== undefined) {
+    waterFlow = props.waterFlow;
   }
-  console.log("====++====", FlowMeter);
 
-  // const replacer = (key, value) => (value === null ? "" : value); // specify how you want to handle null values here
-  // const header = Object.keys(FlowMeter[0]);
-  // const csv = [
-  //   header.join(","), // header row first
-  //   ...FlowMeter.map((row) =>
-  //     header
-  //       .map((fieldName) => JSON.stringify(row[fieldName], replacer))
-  //       .join(",")
-  //   ),
-  // ].join("\r\n");
+  let waterSan = [];
+  if (props.waterSan !== undefined) {
+    waterSan = props.waterSan;
+  }
 
-  // console.log(typeof csv);
+  let workedTime = [];
+  if (props.workedTime !== undefined) {
+    workedTime = props.workedTime;
+  }
+
+  let pumpCtSt = [];
+  if (props.pumpCtSt !== undefined) {
+    pumpCtSt = props.pumpCtSt;
+  }
+  let waterAlarm = [];
+  if (props.waterAlarm !== undefined) {
+    waterAlarm = props.waterAlarm;
+  }
   return (
     <>
       <TimeSelector />
       <br />
-      <ExportCSV csvData={FlowMeter} fileName={"ddd"} />
+      <ExportCSV csvData={waterFlow} csvData1={excelData} fileName={"ddd"} />
       {/* <CardDashboard title={"Цайрт минериалс ХХК"} /> */}
-      <BGNURboard />
+      <BGNURboard
+        waterSan={waterSan}
+        waterFlow={waterFlow}
+        workedTime={workedTime}
+        pumpCtSt={pumpCtSt}
+        waterAlarm={waterAlarm}
+      />
     </>
   );
 };
@@ -44,6 +55,10 @@ const DashPage = (props) => {
 const mapStateToProps = (state) => {
   return {
     waterFlow: state.waterFlow,
+    waterSan: state.waterSan,
+    workedTime: state.workedTime,
+    pumpCtSt: state.pumpCtSt,
+    waterAlarm: state.waterAlarm,
   };
 };
 

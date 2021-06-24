@@ -217,8 +217,9 @@ export const getWaterFlow = (startDate, endDate, userId) => {
     .then((snapshot) => {
       const { docs } = snapshot;
       const flowList = docs.map((doc, i) => {
-        const { created, FlowMeter } = doc.data();
+        const { UserId, created, FlowMeter } = doc.data();
         return {
+          UserId,
           created: moment.unix(created.seconds).format("YYYY/MM/DD HH:mm:ss"),
           FlowMeter,
         };
@@ -296,6 +297,7 @@ export const getWaterAlarm = (startDate, endDate, userId) => {
           idAL,
         };
       });
+      console.log("from api++++++++====++=", typeof AlarmList);
       return AlarmList;
     })
     .catch((error) => {

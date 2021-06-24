@@ -1,3 +1,5 @@
+import { EquipmentId, AlarmMessageId } from "./IdMessage";
+
 export const transpose = (arr) => {
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < i; j++) {
@@ -36,4 +38,56 @@ export const motorDough = (mtr) => {
   //     [0, 720],
   //   ];
   // }
+};
+
+export const numArray = (arrayOfObject, id) => {
+  return arrayOfObject.map((objs) => {
+    let num;
+    objs.map((obj) => {
+      if (obj.idEQ === id) {
+        num = obj.Value;
+      }
+    });
+    return num;
+  });
+};
+
+export const numArrayArray = (arrayOfObject, id) => {
+  let num = {};
+  arrayOfObject.map((objs) => {
+    objs.map((obj) => {
+      if (obj.idEQ === id) {
+        num.hour = obj.hour;
+        num.minut = obj.minut;
+        num.second = obj.second;
+      }
+    });
+  });
+  return num;
+};
+
+export const filterArrayOfObject = (arrayOfObject, id) => {
+  return arrayOfObject.filter((obj) => {
+    return obj.idEQ.includes(id);
+  });
+};
+
+export const filteredCtSt = (filterValue) => {
+  return filterValue.map((el) => {
+    return {
+      created: el.created,
+      idEQ: EquipmentId[el.idEQ],
+      CtSt: el.CtSt ? "ажилласан" : "зогссон",
+    };
+  });
+};
+
+export const filteredAlarm = (filterValue) => {
+  return filterValue.map((el) => {
+    return {
+      created: el.created,
+      idEQ: EquipmentId[el.idEQ],
+      idAL: AlarmMessageId[el.idAL],
+    };
+  });
 };

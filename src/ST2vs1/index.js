@@ -6,15 +6,28 @@ import WaterCard from "../components/waterCard";
 import ElectricCard from "../components/electricCard";
 import { Tabs, Tab } from "react-bootstrap";
 import css from "./style.module.css";
-const ST2vs1 = ({ title, motorTime }) => {
-  const mtr1 = motorTime[0];
-  const mtr2 = motorTime[1];
-  let nss1 = [0, 1440];
-  let nss2 = [0, 1440];
+const ST2vs1 = ({
+  title,
+  label,
+  chartData,
+  deviceId,
+  waterMeter1,
+  waterMeter2,
+  workedTime1,
+  workedTime2,
+  pumpCtSt,
+  waterAlarm,
+  nasos1Id,
+  nasos2Id,
+}) => {
+  let Alarms = [];
+  if (waterAlarm.length > 1 && waterAlarm !== undefined) {
+    Alarms = waterAlarm;
+  }
 
-  if (mtr1 > 0) {
-    nss1 = motorDough(mtr1);
-    nss2 = motorDough(mtr2);
+  let States = [];
+  if (pumpCtSt.length > 1 && pumpCtSt !== undefined) {
+    States = pumpCtSt;
   }
   return (
     <>
@@ -22,33 +35,62 @@ const ST2vs1 = ({ title, motorTime }) => {
       <br />
       <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
         <Tab eventKey="home" title="Home">
+          <br />
           <div className="row">
             <div className="col-sm-3">
-              <Doughnut dayTime={nss1} />
+              <Doughnut workedTime={workedTime1} deviceId={nasos1Id} />
             </div>
             <div className="col-sm-3">
-              <Doughnut dayTime={nss2} />
+              <Doughnut workedTime={workedTime2} deviceId={nasos2Id} />
             </div>
             <div className="col-sm-3">
               <br />
-              <WaterCard yesterdayValue={23} todayValue={122} realValue={324} />
+              <WaterCard
+                yesterdayValue={waterMeter1[0]}
+                todayValue={waterMeter1[1]}
+              />
               <br />
-              <WaterCard yesterdayValue={23} todayValue={122} realValue={324} />
+              <WaterCard
+                yesterdayValue={waterMeter2[0]}
+                todayValue={waterMeter2[1]}
+              />
             </div>
             <div className="col-sm-3">
               <br />
               <ElectricCard
-                yesterdayValue={23}
-                todayValue={122}
-                realValue={324}
+                yesterdayValue={"---"}
+                todayValue={"---"}
+                realValue={"---"}
               />
             </div>
           </div>
           <br />
-          <LineChart />
+          <LineChart label={label} chartData={chartData} deviceId={deviceId} />
         </Tab>
-        <Tab eventKey="WorkedTime" title="WorkedTime"></Tab>
-        <Tab eventKey="Alarms" title="Alarms"></Tab>
+        <Tab eventKey="WorkedTime" title="WorkedTime">
+          <br />
+          <div className={css.note}>
+            <ol>
+              {States.map((el) => (
+                <li>
+                  {el.created} {el.idEQ} {el.CtSt}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Tab>
+        <Tab eventKey="Alarms" title="Alarms">
+          <br />
+          <div className={css.note}>
+            <ol>
+              {Alarms.map((el) => (
+                <li>
+                  {el.created} {el.idEQ} {el.idAL}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Tab>
       </Tabs>
     </>
   );
