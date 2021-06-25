@@ -7,7 +7,11 @@ const Header = (props) => {
   const UserName = () => {
     switch (UserId) {
       case "BGNUR":
-        return <span>Багануур ус</span>;
+        return (
+          <p>
+            <span>Багануур-Ус</span> ААТҮГ
+          </p>
+        );
       case "TSMIN":
         return <span>Цайрт минериалс</span>;
       default:

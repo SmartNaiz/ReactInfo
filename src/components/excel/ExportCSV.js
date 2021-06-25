@@ -1,7 +1,7 @@
 import React from "react";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
-
+import css from "./style.module.css";
 export const ExportCSV = ({ csvData, csvData1, fileName }) => {
   const fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -65,9 +65,14 @@ export const ExportCSV = ({ csvData, csvData1, fileName }) => {
   };
 
   return (
-    <button onClick={(e) => exportToCSV(csvData, csvData1, fileName)}>
-      Export
-    </button>
+    <>
+      <button
+        className={css.button}
+        onClick={(e) => exportToCSV(csvData, csvData1, fileName)}
+      >
+        Export report
+      </button>
+    </>
   );
 };
 //============================================

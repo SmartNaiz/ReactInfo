@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import BGNURboard from "../../components/dashboard/BGNURboard";
 import "react-datepicker/dist/react-datepicker.css";
 import TimeSelector from "../../components/dashboard/timeSelector";
-import { ExportCSV } from "../../utils/ExportCSV";
+import { ExportCSV } from "../../components/excel/ExportCSV";
 
 const DashPage = (props) => {
   const { UserId } = props.auth.user;
@@ -37,9 +37,19 @@ const DashPage = (props) => {
   }
   return (
     <>
-      <TimeSelector />
-      <br />
-      <ExportCSV csvData={waterFlow} csvData1={excelData} fileName={"ddd"} />
+      <div className="row">
+        <div className="col-sm-6">
+          <TimeSelector />
+        </div>
+        <div className="col-sm-6">
+          <ExportCSV
+            csvData={waterFlow}
+            csvData1={excelData}
+            fileName={"ddd"}
+          />
+        </div>
+      </div>
+
       {/* <CardDashboard title={"Цайрт минериалс ХХК"} /> */}
       <BGNURboard
         waterSan={waterSan}
